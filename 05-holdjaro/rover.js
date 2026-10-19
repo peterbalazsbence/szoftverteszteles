@@ -16,6 +16,11 @@ class Rover {
         let obstacle = null;
         for (const command of commands.slice(0, 1)) {
             const directions = ["N", "E", "S", "W"];
+            if (command === "r") {
+                const offset = command === "r" ? 1 : 3;
+                this.direction = directions[(directions.indexOf(this.direction) + offset) % 4];
+                continue;
+            }
             let dx = 0;
             let dy = 0;
             if (this.direction === "N") dy = 1;
