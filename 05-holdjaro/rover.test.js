@@ -40,3 +40,9 @@ QUnit.test("Jobbra fordulás", function (assert) {
     rover.execute("r");
     assert.deepEqual(rover.state(), {x:2,y:2,direction:"E"});
 });
+
+QUnit.test("Balra fordulás", function (assert) {
+    const rover = new Rover(2, 2, "N", 8, 6);
+    rover.execute("l");
+    assert.deepEqual(rover.state(), {x:2,y:2,direction:"W"});
+});
