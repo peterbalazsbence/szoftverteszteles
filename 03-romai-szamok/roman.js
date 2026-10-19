@@ -1,5 +1,6 @@
 function toRoman(number) {
     const symbols = [
+        [500, "D"],
         [100, "C"],
         [90, "XC"],
         [50, "L"],
