@@ -160,3 +160,8 @@ QUnit.test("Üres parancssor", function (assert) {
     const rover=new Rover(2,2,"N",8,6);
     assert.deepEqual(rover.execute(""),{x:2,y:2,direction:"N",obstacle:null});
 });
+
+QUnit.test("Hibás kezdőállapot", function (assert) {
+    for (const args of [[-1,0,"N",8,6],[8,0,"N",8,6],[0,6,"N",8,6],[0,0,"X",8,6],[0,0,"N",0,6],[0,0,"N",8,1],[0.5,0,"N",8,6]]) { assert.throws(() => new Rover(...args),RangeError);
+    }
+});
