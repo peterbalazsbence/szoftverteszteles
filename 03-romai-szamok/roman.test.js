@@ -51,3 +51,7 @@ QUnit.test("1000 → M", function (assert) {
 QUnit.test("900 → CM", function (assert) {
     assert.strictEqual(toRoman(900), "CM");
 });
+
+QUnit.test("A nulla érvénytelen", function (assert) {
+    assert.throws(() => toRoman(0), RangeError);
+});
