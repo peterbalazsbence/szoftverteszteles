@@ -175,3 +175,10 @@ QUnit.test("Nem szöveges parancs", function (assert) {
     const rover=new Rover(0,0,"N",8,6);
     assert.throws(() => rover.execute(null),RangeError);
 });
+
+QUnit.test("Egymástól független holdjárók", function (assert) {
+    const first=new Rover(1,1,"N",8,6);
+    const second=new Rover(1,1,"N",8,6);
+    first.execute("f");
+    assert.deepEqual(second.state(),{x:1,y:1,direction:"N"});
+});
