@@ -27,3 +27,7 @@ QUnit.test("50 → L", function (assert) {
 QUnit.test("40 → XL", function (assert) {
     assert.strictEqual(toRoman(40), "XL");
 });
+
+QUnit.test("100 → C", function (assert) {
+    assert.strictEqual(toRoman(100), "C");
+});
