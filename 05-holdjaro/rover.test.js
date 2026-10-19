@@ -103,3 +103,9 @@ QUnit.test("Mozgás a pólus átlépése után", function (assert) {
     rover.execute("ff");
     assert.deepEqual(rover.state(),{x:5,y:4,direction:"S"});
 });
+
+QUnit.test("Teljes kör kelet felé", function (assert) {
+    const rover=new Rover(2,2,"E",8,6);
+    rover.execute("ffffffff");
+    assert.deepEqual(rover.state(),{x:2,y:2,direction:"E"});
+});
