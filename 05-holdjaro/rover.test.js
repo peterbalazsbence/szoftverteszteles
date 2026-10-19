@@ -121,3 +121,9 @@ QUnit.test("Négy jobbra fordulás", function (assert) {
     rover.execute("rrrr");
     assert.deepEqual(rover.state(),{x:2,y:2,direction:"N"});
 });
+
+QUnit.test("Négy balra fordulás", function (assert) {
+    const rover=new Rover(2,2,"N",8,6);
+    rover.execute("llll");
+    assert.deepEqual(rover.state(),{x:2,y:2,direction:"N"});
+});
