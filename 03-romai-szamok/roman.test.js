@@ -47,3 +47,7 @@ QUnit.test("400 → CD", function (assert) {
 QUnit.test("1000 → M", function (assert) {
     assert.strictEqual(toRoman(1000), "M");
 });
+
+QUnit.test("900 → CM", function (assert) {
+    assert.strictEqual(toRoman(900), "CM");
+});
