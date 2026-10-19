@@ -1,5 +1,19 @@
 class Rover {
     constructor(x, y, direction, width, height, obstacles = []) {
+        if (!Number.isInteger(width) || width < 2 || width % 2 !== 0 ||
+            !Number.isInteger(height) || height < 2 ||
+            !Number.isInteger(x) || x < 0 || x >= width ||
+            !Number.isInteger(y) || y < 0 || y >= height ||
+            !["N", "E", "S", "W"].includes(direction) ||
+            !Array.isArray(obstacles) || obstacles.some(point =>
+                !Array.isArray(point) || point.length !== 2 ||
+                !Number.isInteger(point[0]) || point[0] < 0 || point[0] >= width ||
+                !Number.isInteger(point[1]) || point[1] < 0 || point[1] >= height)) {
+            throw new RangeError("Érvénytelen térkép vagy kezdőállapot.");
+        }
+        if (obstacles.some(([ox, oy]) => ox === x && oy === y)) {
+            throw new RangeError("A kezdőponton akadály van.");
+        }
         this.x = x;
         this.y = y;
         this.direction = direction;
