@@ -85,3 +85,9 @@ QUnit.test("Nyugati térképszél", function (assert) {
     rover.execute("f");
     assert.deepEqual(rover.state(),{x:7,y:2,direction:"W"});
 });
+
+QUnit.test("Déli pólus átlépése", function (assert) {
+    const rover=new Rover(1,0,"S",8,6);
+    rover.execute("f");
+    assert.deepEqual(rover.state(),{x:5,y:0,direction:"N"});
+});
