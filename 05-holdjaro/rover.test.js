@@ -115,3 +115,9 @@ QUnit.test("Teljes kör a pólusokon át", function (assert) {
     rover.execute("f".repeat(12));
     assert.deepEqual(rover.state(),{x:2,y:2,direction:"N"});
 });
+
+QUnit.test("Négy jobbra fordulás", function (assert) {
+    const rover=new Rover(2,2,"N",8,6);
+    rover.execute("rrrr");
+    assert.deepEqual(rover.state(),{x:2,y:2,direction:"N"});
+});
