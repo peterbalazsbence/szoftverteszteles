@@ -144,3 +144,8 @@ QUnit.test("Akadály a térképszélen túl", function (assert) {
     const rover=new Rover(7,2,"E",8,6,[[0,2]]);
     assert.deepEqual(rover.execute("f"),{x:7,y:2,direction:"E",obstacle:{x:0,y:2}});
 });
+
+QUnit.test("Akadály a pólus túloldalán", function (assert) {
+    const rover=new Rover(1,5,"N",8,6,[[5,5]]);
+    assert.deepEqual(rover.execute("f"),{x:1,y:5,direction:"N",obstacle:{x:5,y:5}});
+});
