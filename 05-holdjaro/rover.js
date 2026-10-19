@@ -19,6 +19,7 @@ class Rover {
             let dx = 0;
             let dy = 0;
             if (this.direction === "N") dy = 1;
+            if (this.direction === "S") dy = -1;
             const sign = 1;
             let nextX = this.x + sign * dx;
             let nextY = this.y + sign * dy;
