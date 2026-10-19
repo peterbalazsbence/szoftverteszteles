@@ -52,3 +52,9 @@ QUnit.test("Parancssor végrehajtása", function (assert) {
     rover.execute("ffrflb");
     assert.deepEqual(rover.state(), {x:3,y:3,direction:"N"});
 });
+
+QUnit.test("Keleti térképszél", function (assert) {
+    const rover = new Rover(7, 2, "E", 8, 6);
+    rover.execute("f");
+    assert.deepEqual(rover.state(), {x:0,y:2,direction:"E"});
+});
