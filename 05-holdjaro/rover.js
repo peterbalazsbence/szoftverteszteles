@@ -14,6 +14,19 @@ class Rover {
 
     execute(commands) {
         let obstacle = null;
+        for (const command of commands.slice(0, 1)) {
+            const directions = ["N", "E", "S", "W"];
+            let dx = 0;
+            let dy = 0;
+            if (this.direction === "N") dy = 1;
+            const sign = 1;
+            let nextX = this.x + sign * dx;
+            let nextY = this.y + sign * dy;
+            let nextDirection = this.direction;
+            this.x = nextX;
+            this.y = nextY;
+            this.direction = nextDirection;
+        }
         return { ...this.state(), obstacle };
     }
 }
