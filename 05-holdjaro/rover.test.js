@@ -170,3 +170,8 @@ QUnit.test("Hibás akadálylista", function (assert) {
     for (const obstacles of [null,[[8,0]],[[1]],[[1.5,2]],[[0,0]]]) { assert.throws(() => new Rover(0,0,"N",8,6,obstacles),RangeError);
     }
 });
+
+QUnit.test("Nem szöveges parancs", function (assert) {
+    const rover=new Rover(0,0,"N",8,6);
+    assert.throws(() => rover.execute(null),RangeError);
+});
