@@ -1,4 +1,8 @@
 function toRoman(number) {
+    if (!Number.isInteger(number) || number < 1 || number > 3999) {
+        throw new RangeError("1 és 3999 közötti egész számot adj meg.");
+    }
+
     const symbols = [
         [1000, "M"],
         [900, "CM"],
