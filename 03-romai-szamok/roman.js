@@ -1,5 +1,6 @@
 function toRoman(number) {
     const symbols = [
+        [5, "V"],
         [1, "I"],
     ];
     let result = "";
