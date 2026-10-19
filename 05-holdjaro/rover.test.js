@@ -155,3 +155,8 @@ QUnit.test("Folytatás akadály után", function (assert) {
     rover.execute("f");
     assert.deepEqual(rover.execute("rf"),{x:3,y:2,direction:"E",obstacle:null});
 });
+
+QUnit.test("Üres parancssor", function (assert) {
+    const rover=new Rover(2,2,"N",8,6);
+    assert.deepEqual(rover.execute(""),{x:2,y:2,direction:"N",obstacle:null});
+});
