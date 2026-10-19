@@ -14,7 +14,7 @@ class Rover {
 
     execute(commands) {
         let obstacle = null;
-        for (const command of commands.slice(0, 1)) {
+        for (const command of commands) {
             const directions = ["N", "E", "S", "W"];
             if (command === "r" || command === "l") {
                 const offset = command === "r" ? 1 : 3;
