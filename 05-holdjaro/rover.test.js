@@ -91,3 +91,9 @@ QUnit.test("Déli pólus átlépése", function (assert) {
     rover.execute("f");
     assert.deepEqual(rover.state(),{x:5,y:0,direction:"N"});
 });
+
+QUnit.test("Hátramenet a póluson át", function (assert) {
+    const rover=new Rover(1,5,"S",8,6);
+    rover.execute("b");
+    assert.deepEqual(rover.state(),{x:5,y:5,direction:"N"});
+});
