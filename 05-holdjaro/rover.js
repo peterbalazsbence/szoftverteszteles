@@ -22,7 +22,7 @@ class Rover {
             if (this.direction === "S") dy = -1;
             if (this.direction === "E") dx = 1;
             if (this.direction === "W") dx = -1;
-            const sign = 1;
+            const sign = command === "b" ? -1 : 1;
             let nextX = this.x + sign * dx;
             let nextY = this.y + sign * dy;
             let nextDirection = this.direction;
