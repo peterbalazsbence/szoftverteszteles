@@ -1,22 +1,14 @@
-# Szoftvertesztelés – 2. gyakorlat
+# 2. gyakorlat – Szállítási díj QUnittal
 
-## Szállítási díj tesztelése QUnittal
+A megadott függvényhez 22 QUnit-tesztet készítettem. A súlyhatárokat, az ingyenességet, az országkódokat és az expressz szállítást ellenőriztem. Az eredeti kódot meghagytam. A közvetlen függvényhívásokat és a QUnit-teszteket Node.js alatt futtattam; az eredmények egyeztek.
 
-A feladatban a megadott szállításidíj-számító függvényhez készítettem teszteket. Főleg a súlyhatárokat, az ingyenes szállítás feltételét és a különböző szállítási módokat vizsgáltam. A függvény eredeti működését meghagytam, ezért a hibákat jelző tesztek nem sikeresek.
+Az alapdíj 5 kg alatt 1500 Ft, 5–20 kg között 2500 Ft, felette 5000 Ft. Belföldön 20 000 Ft felett ingyenes a szállítás, külföldre kétszeres díj jár. Expressznél a normál díj másfélszeresével számoltam; az ingyenes szállítást ilyenkor is ingyenesnek vettem. A nulla bemenetet elfogadtam, negatív értéknél kivételt vártam.
 
-Az `index.html` tartalmazza a QUnit tesztoldalt, a `shipping.js` a vizsgált függvényt, a `shipping.test.js` pedig a 22 tesztesetet. A tesztoldal a QUnit 3.0.0-t használja, amelyet interneten keresztül tölt be.
+Az `index.html` a böngészős tesztoldal; a QUnit 3.0.0 betöltéséhez internet szükséges.
 
-## Elvárt működés
+## Tesztek
 
-5 kg alatt 1500 Ft, 5 és 20 kg között a határokat is beleértve 2500 Ft, 20 kg felett pedig 5000 Ft az alapdíj. Magyarországra 20 000 Ft feletti rendelésnél ingyenes a szállítás. Pontosan 20 000 Ft-nál még fizetni kell.
-
-Külföldre a díj kétszeres. Az expressz szállításnál az adott szállítás normál díjának másfélszeresével számoltam, tehát például egy 2 kg-os külföldi csomagnál `1500 × 2 × 1,5 = 4500 Ft` az elvárt összeg. Az ingyenes belföldi szállítást expressz esetén is ingyenesnek vettem, mert a leírás nem ad meg külön minimumfelárat.
-
-A nulla rendelési érték és a nulla tömeg megengedett, csak a negatív értékeket tiltja a specifikáció. Ezeknél kivételt vártam; a hibajelzés pontos formáját a feladat nem határozza meg. Az országkódoknál érvényes kétbetűs kódokkal teszteltem, kis- és nagybetűvel is.
-
-## Teszteredmények
-
-Az elvárt eredményeket a specifikációból számoltam ki. A függvényt közvetlen meghívásokkal is ellenőriztem Node.js alatt, majd lefuttattam ugyanazokat az eseteket QUnittal. A két futtatás eredménye egyezett. A táblázatban a kapott értékek szerepelnek; a QUnit-teszteket szintén Node.js alatt futtattam.
+**Eredmény: 12 sikeres, 10 sikertelen teszt.**
 
 | Teszt | Rendelés (Ft) | Tömeg (kg) | Ország | Expressz | Elvárt díj (Ft) | Kapott díj (Ft) | Megfelelt? |
 |---|---:|---:|:---:|:---:|---:|---:|:---:|
@@ -43,26 +35,14 @@ Az elvárt eredményeket a specifikációból számoltam ki. A függvényt közv
 | T21 | 10 000 | −1 | HU | Nem | Hibajelzés | 1500 | Nem |
 | T22 | 30 000 | −1 | HU | Nem | Hibajelzés | 0 | Nem |
 
-A 22 tesztből 12 sikeres, 10 hibát jelez. A sikertelen esetek öt problémára vezethetők vissza.
-
 ## Talált hibák
 
-### 1. Az 5 és 20 kg-os határokat rosszul kezeli
+| Hiba | Oka | Teszt |
+|---|---|---|
+| 5 és 20 kg-nál 5000 Ft-ot számol 2500 Ft helyett. | A középső sáv feltétele kizárja a két határértéket. | T03, T06 |
+| Már 20 000 Ft-nál ingyenes a szállítás. | A feltétel `>= 20000`, pedig `> 20000` kellene. | T09 |
+| A `hu` országkódot külföldinek veszi. | Csak a nagybetűs `HU` alakot ismeri fel. | T13, T14 |
+| Az expressz felár 50 Ft. | 50% helyett fix 50-et ad hozzá. | T16, T17 |
+| Elfogadja a negatív értékeket. | Hiányzik az ellenőrzés, amelynek az ingyenesség vizsgálata elé kellene kerülnie. | T20–T22 |
 
-A `calculateShippingCost(10000, 5, "HU", false)` 5000 Ft-ot ad vissza 2500 Ft helyett (T03). Ugyanez történik 20 kg-nál is (T06). A `weight > 5 && weight < 20` feltétel egyik határértéket sem fogadja el, így ezek a legdrágább kategóriába kerülnek. A középső sávban az 5 és a 20 kg-nak is benne kellene lennie.
-
-### 2. Már pontosan 20 000 Ft-nál ingyenes a szállítás
-
-A `calculateShippingCost(20000, 2, "HU", false)` eredménye 0 Ft, pedig 1500 Ft lenne a helyes díj (T09). A feladat 20 000 Ft feletti rendelésről ír, a kód viszont `>= 20000` feltételt használ. Itt `> 20000` kellene.
-
-### 3. A kisbetűs magyar országkódot külföldinek veszi
-
-A `calculateShippingCost(10000, 2, "hu", false)` 3000 Ft-ot ad vissza 1500 Ft helyett (T13). Nagyobb rendelésnél az ingyenesség is elmarad: a `calculateShippingCost(20001, 2, "hu", false)` eredménye 3000 Ft a várt 0 Ft helyett (T14). A függvény csak a pontosan `"HU"` alakot ismeri fel. Az összehasonlítások előtt egységesíteni kellene a kis- és nagybetűket.
-
-### 4. Az expressz felár 50 Ft, nem 50%
-
-A `calculateShippingCost(10000, 2, "HU", true)` eredménye 1550 Ft, pedig 2250 Ft-ot kellene fizetni (T16). A kód `shippingCost + 50` műveletet végez a díj másfélszerezése helyett. Külföldi szállításnál is megjelenik a hiba: a T17 teszt 4500 Ft helyett 3050 Ft-ot ad.
-
-### 5. Nem ellenőrzi a negatív bemeneteket
-
-A `calculateShippingCost(-1, 2, "HU", false)` hívás 1500 Ft-ot ad hibajelzés helyett (T20). Negatív tömegnél ugyanez a probléma (T21). A `calculateShippingCost(30000, -1, "HU", false)` még az ingyenes szállítás feltételénél visszatér 0-val (T22). Az értékek ellenőrzésének a függvény elejére kellene kerülnie, az ingyenesség vizsgálata elé.
+A hibák a táblázatban szereplő bemenetekkel reprodukálhatók. A sikertelen QUnit-tesztek ezeket az eltéréseket jelzik.

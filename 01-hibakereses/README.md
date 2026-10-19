@@ -1,25 +1,12 @@
-# Szoftvertesztelés – 1. gyakorlat
+# 1. gyakorlat – DiscountCalculator
 
-## DiscountCalculator
+A kedvezményszámító függvényt 13 teszttel ellenőriztem Node.js alatt. A határértékeket, a VIP-kedvezményt és a negatív bemenetet vizsgáltam. Az eredeti kódot nem javítottam át.
 
-A feladatban egy webáruház kedvezményszámító függvényét vizsgáltam. A tesztekhez a kedvezménysávok határait, a VIP-kedvezményt és a negatív rendelési értéket választottam. Az elvárt összegeket a specifikáció alapján számoltam ki, majd összehasonlítottam őket a függvény eredményeivel.
+A kedvezmény 10 000 Ft alatt 0%, onnantól 5%, 25 000 Ft-tól 10%, 50 000 Ft-tól 15%. VIP esetén további 5 százalékpont jár, legfeljebb 20%-ig. Negatív összegnél kivételt vártam; egész forintra nem kerekítettem.
 
-A megadott függvényt nem javítottam át. A 13 tesztesetet Node.js alatt, a `run-tests.js` fájllal futtattam le.
+## Tesztek
 
-## Elvárt működés
-
-| Rendelési érték | Kedvezmény |
-|---|---:|
-| 10 000 Ft alatt | 0% |
-| 10 000–24 999 Ft | 5% |
-| 25 000–49 999 Ft | 10% |
-| 50 000 Ft-tól | 15% |
-
-VIP vásárlónál ehhez további 5 százalékpont jár, de a kedvezmény legfeljebb 20% lehet. A fizetendő összeg a rendelési érték és az `1 − kedvezmény` szorzata. Például 25 000 Ft-nál, VIP-kedvezmény nélkül: `25000 × 0,9 = 22500 Ft`.
-
-A negatív rendelési érték érvénytelen. A leírás nem adja meg a hibajelzés pontos módját, ezért a tesztben kivételt vártam. Egész forintra nem kerekítettem, mert a specifikáció nem kér ilyet.
-
-## Teszteredmények
+**Eredmény: 2 sikeres, 11 sikertelen teszt.**
 
 | Teszt | Rendelési érték (Ft) | VIP | Elvárt eredmény (Ft) | Kapott eredmény (Ft) | Megfelelt? |
 |---|---:|:---:|---:|---:|:---:|
@@ -37,30 +24,14 @@ A negatív rendelési érték érvénytelen. A leírás nem adja meg a hibajelz�
 | T12 | 50 000 | Igen | 40 000 | 49 999,80 | Nem |
 | T13 | −1000 | Nem | Hibajelzés | −1000 | Nem |
 
-A 13 tesztből 2 adott helyes eredményt, 11 esetben eltérés volt. Ezek mögött öt különböző hibát találtam.
-
 ## Talált hibák
 
-### 1. Pontosan 10 000 Ft-nál nem jár kedvezmény
+| Hiba | Oka | Teszt |
+|---|---|---|
+| 10 000 Ft-nál kimarad az 5% kedvezmény. | Az alsó határnál `>` szerepel `>=` helyett. | T03 |
+| 50 000 Ft-nál csak 10% kedvezményt választ. | Ez az érték még a második sávba kerül, pedig már 15% járna. | T08 |
+| Minden VIP-vásárlónál 20%-ra áll a kedvezmény. | A kód `5`-öt ad hozzá `0.05` helyett. | T10 |
+| Hibás a fizetendő összeg. | A kedvezmény arányát vonja le; helyesen `orderValue * (1 - discount)` lenne. | T06 |
+| Elfogadja a negatív összeget. | Hiányzik a bemenet ellenőrzése. | T13 |
 
-A `calculateDiscountedPrice(10000, false)` hívás eredménye 10 000 Ft, pedig 9500 Ft lenne a helyes érték (T03). Az első feltételben `orderValue > 10000` szerepel, ezért a 10 000 Ft kimarad az 5%-os sávból. Itt `>=` összehasonlításra lenne szükség.
-
-### 2. Pontosan 50 000 Ft-nál rossz kedvezményt választ
-
-A `calculateDiscountedPrice(50000, false)` hívás 49 999,90 Ft-ot ad vissza a várt 42 500 Ft helyett (T08). A 10%-os sáv feltétele még az 50 000 Ft-ot is tartalmazza, holott ott már 15% jár. A második sáv felső határának `< 50000`, a harmadik sáv alsó határának `>= 50000` kellene lennie.
-
-Ennél a tesztnél a végösszeg számítása is hibás. Ha csak azt javítanánk, a rosszul kiválasztott 10% miatt még mindig 45 000 Ft lenne az eredmény.
-
-### 3. Hibásan adja hozzá a VIP-kedvezményt
-
-A `calculateDiscountedPrice(1000, true)` hívás 999,80 Ft-ot ad vissza 950 Ft helyett (T10). A kód `discount += 5` utasítást használ, miközben a kedvezményt tört alakban tárolja. Az 5 százalékponthoz `0.05`-öt kellene hozzáadni. Így viszont minden VIP-vásárló kedvezménye eléri a 20%-os korlátot.
-
-Ezt a tesztet a végösszeg hibás számítása is érinti. Annak javítása után 800 Ft lenne az eredmény, tehát a VIP-hiba külön is megmaradna.
-
-### 4. Nem a kedvezmény összegét vonja le
-
-A `calculateDiscountedPrice(25000, false)` eredménye 24 999,90 Ft, pedig 22 500 Ft-ot kellene fizetni (T06). A `return orderValue - discount` csak 0,10 Ft-ot von le, nem a rendelési érték 10%-át. A helyes számítás: `orderValue * (1 - discount)`.
-
-### 5. Elfogadja a negatív rendelési értéket
-
-A `calculateDiscountedPrice(-1000, false)` hívás −1000-et ad vissza hibajelzés helyett (T13). A függvény elején nincs ellenőrzés a negatív bemenetre. Ezt még a kedvezmény kiszámítása előtt kellene elutasítani.
+A T08 és T10 esetet a hibás végösszegszámítás is érinti. A hibák a táblázatban megadott bemenetekkel reprodukálhatók.
