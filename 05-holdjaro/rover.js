@@ -27,6 +27,9 @@ class Rover {
     }
 
     execute(commands) {
+        if (typeof commands !== "string" || /[^fblr]/.test(commands)) {
+            throw new RangeError("Csak az f, b, l és r parancsok használhatók.");
+        }
         let obstacle = null;
         for (const command of commands) {
             const directions = ["N", "E", "S", "W"];
