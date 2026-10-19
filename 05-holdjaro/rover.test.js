@@ -58,3 +58,9 @@ QUnit.test("Keleti térképszél", function (assert) {
     rover.execute("f");
     assert.deepEqual(rover.state(), {x:0,y:2,direction:"E"});
 });
+
+QUnit.test("Északi pólus átlépése", function (assert) {
+    const rover = new Rover(1, 5, "N", 8, 6);
+    rover.execute("f");
+    assert.deepEqual(rover.state(), {x:5,y:5,direction:"S"});
+});
