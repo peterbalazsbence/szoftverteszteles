@@ -134,3 +134,8 @@ QUnit.test("Hátramenet mind a négy irányba", function (assert) {
     assert.deepEqual(rover.state(),{x,y,direction});
     }
 });
+
+QUnit.test("Akadály hátramenetben", function (assert) {
+    const rover=new Rover(2,2,"N",8,6,[[2,1]]);
+    assert.deepEqual(rover.execute("b"),{x:2,y:2,direction:"N",obstacle:{x:2,y:1}});
+});
