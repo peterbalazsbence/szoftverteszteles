@@ -37,6 +37,10 @@ class Rover {
                 nextX = (nextX + this.width / 2) % this.width;
                 nextDirection = this.direction === "N" ? "S" : "N";
             }
+            if (this.obstacles.has(nextX + "," + nextY)) {
+                obstacle = { x: nextX, y: nextY };
+                break;
+            }
             this.x = nextX;
             this.y = nextY;
             this.direction = nextDirection;
