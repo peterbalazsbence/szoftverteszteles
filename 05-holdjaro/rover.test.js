@@ -127,3 +127,10 @@ QUnit.test("Négy balra fordulás", function (assert) {
     rover.execute("llll");
     assert.deepEqual(rover.state(),{x:2,y:2,direction:"N"});
 });
+
+QUnit.test("Hátramenet mind a négy irányba", function (assert) {
+    for (const [direction,x,y] of [["N",2,1],["E",1,2],["S",2,3],["W",3,2]]) { const rover=new Rover(2,2,direction,8,6);
+    rover.execute("b");
+    assert.deepEqual(rover.state(),{x,y,direction});
+    }
+});
