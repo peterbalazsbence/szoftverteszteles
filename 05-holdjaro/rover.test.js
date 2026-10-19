@@ -10,3 +10,9 @@ QUnit.test("Előre észak felé", function (assert) {
     rover.execute("f");
     assert.deepEqual(rover.state(), {x:2,y:3,direction:"N"});
 });
+
+QUnit.test("Előre dél felé", function (assert) {
+    const rover = new Rover(2, 2, "S", 8, 6);
+    rover.execute("f");
+    assert.deepEqual(rover.state(), {x:2,y:1,direction:"S"});
+});
