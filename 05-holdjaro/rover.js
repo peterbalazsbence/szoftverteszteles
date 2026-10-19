@@ -31,6 +31,7 @@ class Rover {
             let nextX = this.x + sign * dx;
             let nextY = this.y + sign * dy;
             let nextDirection = this.direction;
+            nextX = (nextX + this.width) % this.width;
             this.x = nextX;
             this.y = nextY;
             this.direction = nextDirection;
