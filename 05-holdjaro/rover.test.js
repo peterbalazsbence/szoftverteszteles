@@ -69,3 +69,7 @@ QUnit.test("Akadálynál megáll a parancssor", function (assert) {
     const rover = new Rover(2, 1, "N", 8, 6, [[2,3]]);
     assert.deepEqual(rover.execute("ffrf"), {x:2,y:2,direction:"N",obstacle:{x:2,y:3}});
 });
+
+QUnit.test("Páratlan térképszélesség elutasítása", function (assert) {
+    assert.throws(() => new Rover(0,0,"N",7,6), RangeError);
+});
