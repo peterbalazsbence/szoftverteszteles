@@ -4,3 +4,4 @@
 - [2. gyakorlat – QUnit-tesztek](02-unit-tesztek/README.md)
 - [3. gyakorlat – Római számok TDD-vel](03-romai-szamok/README.md)
 - [4. gyakorlat – BankAccount és JUnit 5](04-bankaccount/README.md)
+- [5. gyakorlat – Holdjáró TDD-vel](05-holdjaro/README.md)
