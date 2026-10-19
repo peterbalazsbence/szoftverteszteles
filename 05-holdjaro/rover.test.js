@@ -79,3 +79,9 @@ QUnit.test("Ismeretlen parancs elutasítása", function (assert) {
     assert.throws(() => rover.execute("fx"), RangeError);
     assert.deepEqual(rover.state(),{x:2,y:2,direction:"N"});
 });
+
+QUnit.test("Nyugati térképszél", function (assert) {
+    const rover=new Rover(0,2,"W",8,6);
+    rover.execute("f");
+    assert.deepEqual(rover.state(),{x:7,y:2,direction:"W"});
+});
