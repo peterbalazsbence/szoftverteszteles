@@ -46,3 +46,9 @@ QUnit.test("Balra fordulás", function (assert) {
     rover.execute("l");
     assert.deepEqual(rover.state(), {x:2,y:2,direction:"W"});
 });
+
+QUnit.test("Parancssor végrehajtása", function (assert) {
+    const rover = new Rover(2, 2, "N", 8, 6);
+    rover.execute("ffrflb");
+    assert.deepEqual(rover.state(), {x:3,y:3,direction:"N"});
+});
