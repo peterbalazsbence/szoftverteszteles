@@ -1,12 +1,8 @@
 # 1. gyakorlat – DiscountCalculator
 
-A kedvezményszámító függvényt 13 teszttel ellenőriztem Node.js alatt. A határértékeket, a VIP-kedvezményt és a negatív bemenetet vizsgáltam. Az eredeti kódot nem javítottam át.
+Futtatás: Node.js. Negatív összegnél kivételt vártam, az eredményeket nem kerekítettem egész forintra.
 
-A kedvezmény 10 000 Ft alatt 0%, onnantól 5%, 25 000 Ft-tól 10%, 50 000 Ft-tól 15%. VIP esetén további 5 százalékpont jár, legfeljebb 20%-ig. Negatív összegnél kivételt vártam; egész forintra nem kerekítettem.
-
-## Tesztek
-
-**Eredmény: 2 sikeres, 11 sikertelen teszt.**
+## Teszteredmények
 
 | Teszt | Rendelési érték (Ft) | VIP | Elvárt eredmény (Ft) | Kapott eredmény (Ft) | Megfelelt? |
 |---|---:|:---:|---:|---:|:---:|
@@ -33,5 +29,3 @@ A kedvezmény 10 000 Ft alatt 0%, onnantól 5%, 25 000 Ft-tól 10%, 50 000 Ft-t�
 | Minden VIP-vásárlónál 20%-ra áll a kedvezmény. | A kód `5`-öt ad hozzá `0.05` helyett. | T10 |
 | Hibás a fizetendő összeg. | A kedvezmény arányát vonja le; helyesen `orderValue * (1 - discount)` lenne. | T06 |
 | Elfogadja a negatív összeget. | Hiányzik a bemenet ellenőrzése. | T13 |
-
-A T08 és T10 esetet a hibás végösszegszámítás is érinti. A hibák a táblázatban megadott bemenetekkel reprodukálhatók.

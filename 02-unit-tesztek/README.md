@@ -1,14 +1,8 @@
 # 2. gyakorlat – Szállítási díj QUnittal
 
-A megadott függvényhez 22 QUnit-tesztet készítettem. A súlyhatárokat, az ingyenességet, az országkódokat és az expressz szállítást ellenőriztem. Az eredeti kódot meghagytam. A közvetlen függvényhívásokat és a QUnit-teszteket Node.js alatt futtattam; az eredmények egyeztek.
+Futtatás: Node.js és QUnit. Expressznél a normál díj másfélszeresével számoltam, az ingyenes szállítás így is 0 Ft. Negatív bemenetnél kivételt vártam.
 
-Az alapdíj 5 kg alatt 1500 Ft, 5–20 kg között 2500 Ft, felette 5000 Ft. Belföldön 20 000 Ft felett ingyenes a szállítás, külföldre kétszeres díj jár. Expressznél a normál díj másfélszeresével számoltam; az ingyenes szállítást ilyenkor is ingyenesnek vettem. A nulla bemenetet elfogadtam, negatív értéknél kivételt vártam.
-
-Az `index.html` a böngészős tesztoldal; a QUnit 3.0.0 betöltéséhez internet szükséges.
-
-## Tesztek
-
-**Eredmény: 12 sikeres, 10 sikertelen teszt.**
+## Teszteredmények
 
 | Teszt | Rendelés (Ft) | Tömeg (kg) | Ország | Expressz | Elvárt díj (Ft) | Kapott díj (Ft) | Megfelelt? |
 |---|---:|---:|:---:|:---:|---:|---:|:---:|
@@ -44,5 +38,3 @@ Az `index.html` a böngészős tesztoldal; a QUnit 3.0.0 betöltéséhez interne
 | A `hu` országkódot külföldinek veszi. | Csak a nagybetűs `HU` alakot ismeri fel. | T13, T14 |
 | Az expressz felár 50 Ft. | 50% helyett fix 50-et ad hozzá. | T16, T17 |
 | Elfogadja a negatív értékeket. | Hiányzik az ellenőrzés, amelynek az ingyenesség vizsgálata elé kellene kerülnie. | T20–T22 |
-
-A hibák a táblázatban szereplő bemenetekkel reprodukálhatók. A sikertelen QUnit-tesztek ezeket az eltéréseket jelzik.
